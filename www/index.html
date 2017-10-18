@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel="apple-touch-icon" href="favicon.png?v=2">
+	<link rel="shortcut icon" sizes="120x120" href="favicon.png?v=1">
+	<!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Make the page mobile compatible -->
+	<meta name="mobile-web-app-capable" content="yes">
+	<title>Test code for authentication (jQuery/Bootstrap version)</title>
+	<script src="js/jquery-2.1.4.js"></script>
+	<link rel="stylesheet" href="style/bootstrap.min.css"> <!-- version 3.3.7 Bootstrap -->
+	<link rel="stylesheet" href="style/bootstrap-theme.min.css">
+	<script type="text/javascript" src="/style/bootstrap-3.3.7/dist/js/bootstrap.js"></script>
+<style>
+.panel-heading {
+	font-size: x-large;
+}
+.modal-title {
+	font-size: x-large;
+	width: 80%;
+	display: inline-block;
+}
+.left-25px {
+	padding-left:25px;
+}
+</style>
+</head>
+<body>
+	<div class="page-header left-25px"><h1> Interactive test of server. </h1></div>
+
+	<div class="content container">
+
+		<div>
+			<div class="row">
+				<div class="col-sm-10">
+					<div class="panel panel-info">
+						<div class="panel-heading"> Signup </div>
+						<div class="panel-body">
+							<form class="is-form" id="form01" method="POST" action="/signup">
+								<div class="form-group ">
+									<label class="form-control-label">Email</label>
+									<input class="form-control" name="email" type="text"> 
+								</div>
+								<div class="form-group ">
+									<label class="form-control-label">Password</label>
+									<input class="form-control" name="password" type="text">	   
+								</div>
+								<div class="form-group ">
+									<label class="form-control-label">First Name</label>
+									<input class="form-control" name="firstName" type="text"> 
+								</div>
+								<div class="form-group ">
+									<label class="form-control-label">Last Name</label>
+									<input class="form-control" name="lastName" type="text"> 
+								</div>
+								<div class="form-group ">
+									<button class="btn btn-primary" type="submit">Signup Now</button>		
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<div class="row">
+				<div class="col-sm-10">
+					<div class="panel panel-info">
+						<div class="panel-heading"> Login </div>
+						<div class="panel-body">
+							<form class="is-form" id="form03" method="POST" action="/login">
+								<div class="form-group ">
+									<label class="form-control-label">Email</label>
+									<input class="form-control" name="email" type="text"> 
+								</div>
+								<div class="form-group ">
+									<label class="form-control-label">Password</label>
+									<input class="form-control" name="password" type="text">	   
+								</div>
+								<div class="form-group ">
+									<button class="btn btn-primary" type="submit">Login</button> 
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<div class="row">
+				<div class="col-sm-10">
+					<div class="panel panel-info">
+						<div class="panel-heading"> Chagne Name for Logged In User </div>
+						<div class="panel-body">
+							<form class="is-form" id="form05" method="PUT" action="/users">
+								<div class="form-group ">
+									<label class="form-control-label">First Name</label>
+									<input class="form-control" name="firstName" type="text"> 
+								</div>
+								<div class="form-group ">
+									<label class="form-control-label">Last Name</label>
+									<input class="form-control" name="lastName" type="text"> 
+								</div>
+								<div class="form-group ">
+									<button class="btn btn-primary" type="submit">Change Name</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<div class="row">
+				<div class="col-sm-10">
+					<div class="panel panel-info">
+						<div class="panel-heading"> Other Actions </div>
+						<div class="panel-body">
+							<form class="is-form" id="form14" method="GET" action="/users">
+								<div class="form-group ">
+									<button class="btn btn-primary" id="GetUsers" >Get List of Users</button>
+									<button class="btn btn-primary" id="Logout" >Logout</button>
+									<button class="btn btn-primary" id="ShowAuthToken" >Show Auth Token</button>
+									<button class="btn btn-primary" id="ClearOutput" >Clear Output</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<div class="row">
+				<div class="col-sm-10">
+					<div class="panel panel-info">
+						<div class="panel-heading"> Output </div>
+						<div class="panel-body">
+							<pre id="output"></pre>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" id="modalTitleBar">
+					<h5 class="modal-title" id="modalTitle">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p id="modalBody"> xyzzy - Modal body text goes here.</p>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script>
+
+var auth_token = "";
+
+function SetupJWTAuthorizationToken() {
+	$.ajaxSetup({
+		beforeSend: function(xhr) {
+			if ( auth_token != "" ) {
+				console.log ( "Setting header with auth token", auth_token );
+				xhr.setRequestHeader('X-Authentication-Token', auth_token);
+			}
+		}
+		,dataFilter: function(data, type) {
+			var prefix = ['//', ')]}\'', 'while(1);', 'while(true);', 'for(;;);'], i, l, pos;
+
+			// console.log ( "dataFilter: data type", type );
+
+			if (type && type != 'json' && type != 'jsonp') {
+				return data;
+			}
+
+			// console.log ( "dataFilter: raw data before remove of prefix.", data );
+
+			var dl = data.length;	 // data length 
+			for (i = 0, l = prefix.length; i < l; i++) {
+				var pl = prefix[i].length; // pattern lenght
+				// console.log ( "dataFilter: raw substr -={" + data.substring(0,pl) + "}=-" );
+				if ( dl >= pl && data.substring(0,pl) === prefix[i] ) {
+					return data.substring(pl);
+				}
+			}
+
+			return data;
+		}
+	});
+}
+
+function modalError( msg ) {
+	$("#modalBody").text ( "Error Status :" + msg );
+	$("#modalTitle").text ( "Error" );
+	$("#modalTitleBar").css({"background-color":"#ead68b"});
+	$("#myModal").modal('show')
+}
+
+function modalSuccess( msg ) {
+	$("#modalBody").text ( msg );
+	$("#modalTitle").text ( "Success" );
+	$("#modalTitleBar").css({"background-color":"#b1f1bf"});
+	$("#myModal").modal('show')
+}
+
+function submitIt ( event, id ) {
+	console.log( "Handler for #"+id+".submit() called." );
+	event.preventDefault();
+
+	SetupJWTAuthorizationToken() 
+
+	var frm = $('#'+id);
+	var arr = {};
+	frm.serializeArray().map(function(x){arr[x.name] = x.value;}); 
+	// console.log ( "arr=", arr );
+	$.ajax({
+		type: frm.attr('method'),
+		url: frm.attr('action'),
+		dataType: 'json',
+		data: JSON.stringify(arr),
+		contentType: 'application/json; charset=utf-8',
+		success: function (data) {
+			console.log ( 'data=', data );	 // already parsed.
+			if ( data.status && data.status != "success" ) {
+				modalError( data.msg );
+				$("#output").append( "Error " + JSON.stringify(data, null, 4) + "<hr>" );
+			} else {
+				if ( data.token ) {
+					auth_token = data.token;
+					modalSuccess ( "You are now logged in." );
+					$("#output").append( "Set auth token to " + auth_token + "<hr>" );
+				} else {
+					$("#output").append( JSON.stringify(data, null, 4) + "<hr>" );
+				}
+			}
+		},
+		error: function(resp) {
+			console.log("error=",resp);
+			$("#output").append( "Error Status = " + resp.status + "<hr>" );
+			modalError( resp.status );
+		}
+	});
+}
+
+// <button class="btn btn-primary" id="GetUsers" >Get List of Users</button>
+$("#GetUsers").click( function(event){ submitIt(event,'form14'); } ); // get /users
+
+// clear auth token
+// <button class="btn btn-primary" id="Logout" >Logout</button>
+$("#Logout").click( function(event){ auth_token = ""; } ); // clear auth token
+
+// <button class="btn btn-primary" id="ShowAuthToken" >Show Auth Token</button>
+$("#ShowAuthToken").click( function(event){ 
+	$("#output").append( auth_token + "<hr>" );
+}); 
+
+$("#ClearOutput").click( function(event){ 
+	$("#output").text( "" );
+}); 
+
+$( "#form01" ).submit(function( event ) { submitIt ( event, 'form01' ); });	// register
+$( "#form03" ).submit(function( event ) { submitIt ( event, 'form03' ); });	// login
+$( "#form05" ).submit(function( event ) { submitIt ( event, 'form05' ); }); // change firstName, lastName
+$( "#form14" ).submit(function( event ) { event.preventDefault(); }); // get /users
+
+</script>
+
+</body>
+</html>

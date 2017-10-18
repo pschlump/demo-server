@@ -1,0 +1,6 @@
+{
+	comment: "configuration for demo-server"
+	PGConn: """user=pschlump password={{ __env__ DB_PASS }} sslmode=disable dbname=pschlump port=5432 host=192.168.0.139""" ,
+	DBType: "postgres",
+	DBName: "pschlump",
+}
